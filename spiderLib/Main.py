@@ -3,11 +3,23 @@ import datetime
 import logging
 
 class Main(ParseOnePage.ParseOnePage):
+    #获取上市公司名称
+    def main_get_company_name(self):
+        html = self.get_one_page(self.url)
+        name_list = self.parse_one_page(html, self.rule1)
+        str_name_list = ",".join(name_list)
+        print(str_name_list)
+        f = open('./companyName/companyName.txt', 'w')
+        f.write(str_name_list)
+        f.close()
+
     #定义main_pengpai()函数，这是爬取澎湃新闻的方法
     def main_pengpai(self):
         try:
             conn = self.db_conn()
             cursor = conn.cursor()
+            # 获取本页面数据在数据库中的最新一条数据的时间，用于判断爬取下来的数据有没有存入数据库，做增量插入
+            newest_time = self.get_newest_time_by_pageid()
             #爬取前五页的数据
             for i in [1, 2, 3, 4, 5]:
                 url = self.url+str(i)
@@ -22,7 +34,9 @@ class Main(ParseOnePage.ParseOnePage):
                     cursor.execute('select * from tblGrabNews where title=%s', (item[2].strip().replace("&nbsp;", ""),))
                     values = cursor.fetchall()
                     #格式化爬取下来的时间，爬取的数据是字符串格式，我们需要将其转化为datetime格式
-                    public_time_d = datetime.datetime.strptime(public_time[0]+":00",'%Y-%m-%d %H:%M:%S')  
+                    public_time_d = datetime.datetime.strptime(public_time[0]+":00",'%Y-%m-%d %H:%M:%S')
+                    if public_time_d <= newest_time:
+                        return
                     if len(values) == 0:
                         if len(item[3].strip()) > 30:
                             #将数据存入数据库
@@ -30,7 +44,6 @@ class Main(ParseOnePage.ParseOnePage):
                                            (item[2].strip().replace("&nbsp;", ""), item[3].strip(), item[0].strip(), public_time[0], '0', '0', item[4].strip(), 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
                             conn.commit()
             conn.close()
-            print("done!!!")
         except Exception as e:
             logging.exception(e)
 
@@ -39,6 +52,8 @@ class Main(ParseOnePage.ParseOnePage):
         try:
             conn = self.db_conn()
             cursor = conn.cursor()
+            # 获取本页面数据在数据库中的最新一条数据的时间，用于判断爬取下来的数据有没有存入数据库，做增量插入
+            newest_time = self.get_newest_time_by_pageid()
             html = self.get_one_page(self.url)
             for item in self.parse_one_page(html, self.rule1):
                 if item[0][0:2] == "./":
@@ -69,6 +84,8 @@ class Main(ParseOnePage.ParseOnePage):
                         values = cursor.fetchall()
                         # 格式化爬取下来的时间，爬取的数据是字符串格式，我们需要将其转化为datetime格式
                         public_time_d = datetime.datetime.strptime(item[1].strip().replace("/", "-")+":00", '%Y-%m-%d %H:%M:%S')
+                        if public_time_d <= newest_time:
+                            return
                         if len(values) == 0:
                             if len(article_info[2].strip()) > 50:
                                 # 将数据存入数据库
@@ -77,7 +94,6 @@ class Main(ParseOnePage.ParseOnePage):
                                 conn.commit()
                                 # print('111111')
             conn.close()
-            print("done!!!")
         except Exception as e:
             logging.exception(e)
     #中国科技网
@@ -85,6 +101,8 @@ class Main(ParseOnePage.ParseOnePage):
         try:
             conn = self.db_conn()
             cursor = conn.cursor()
+            # # 获取本页面数据在数据库中的最新一条数据的时间，用于判断爬取下来的数据有没有存入数据库，做增量插入
+            # newest_time = self.get_newest_time_by_pageid()
             for i in ["", "_2", "_3", "_4", "_5"]:
                 html = self.get_one_page(self.url+i+".shtml")
                 for item in self.parse_one_page(html, self.rule1):
@@ -94,6 +112,8 @@ class Main(ParseOnePage.ParseOnePage):
                     values = cursor.fetchall()
                     # 格式化爬取下来的时间，爬取的数据是字符串格式，我们需要将其转化为datetime格式
                     public_time_d = datetime.datetime.strptime(item[2].strip() + ":00", '%Y-%m-%d %H:%M:%S')
+                    # if public_time_d <= newest_time:
+                    #     return
                     if len(values) == 0:
                         if len(item[1].strip()) > 30:
                             # 将数据存入数据库
@@ -103,14 +123,15 @@ class Main(ParseOnePage.ParseOnePage):
                                             category_info[0], category_info[1]))
                             conn.commit()
             conn.close()
-            print("done!!!")
         except Exception as e:
             logging.exception(e)
-    #人名网
+    #人民网
     def main_rmw(self):
         try:
             conn = self.db_conn()
             cursor = conn.cursor()
+            # 获取本页面数据在数据库中的最新一条数据的时间，用于判断爬取下来的数据有没有存入数据库，做增量插入
+            newest_time = self.get_newest_time_by_pageid()
             html = self.get_one_page(self.url)
             ts_rule = '<div class="ej_left">(.*?)<div class="p1_right ej_right">'
             html_real_list = self.parse_one_page(html, ts_rule)
@@ -124,6 +145,8 @@ class Main(ParseOnePage.ParseOnePage):
                     # 格式化爬取下来的时间，爬取的数据是字符串格式，我们需要将其转化为datetime格式
                     time_str = item_son[1]+"-"+item_son[2]+"-"+item_son[3]+" "+item_son[4]+":"+item_son[5]+":00"
                     public_time_d = datetime.datetime.strptime(time_str, '%Y-%m-%d %H:%M:%S')
+                    if public_time_d <= newest_time:
+                        return
                     if len(values) == 0:
                         if len(item_son[7].strip()) > 30:
                             # 将数据存入数据库
@@ -133,7 +156,6 @@ class Main(ParseOnePage.ParseOnePage):
                                             category_info[0], category_info[1]))
                             conn.commit()
             conn.close()
-            print("done!!!")
         except Exception as e:
             logging.exception(e)
 
@@ -166,15 +188,44 @@ class Main(ParseOnePage.ParseOnePage):
                                                     item[1], '0', '0', '0', 0, 0, public_time_d, self.pageid,
                                                     category_info[0], category_info[1]))
                             conn.commit()
-                conn.close()
+            conn.close()
         except Exception as e:
             logging.exception(e)
-    #获取上市公司名称
-    def main_get_company_name(self):
-        html = self.get_one_page(self.url)
-        name_list = self.parse_one_page(html, self.rule1)
-        str_name_list = ",".join(name_list)
-        print(str_name_list)
-        f = open('./companyName/companyName.txt', 'w')
-        f.write(str_name_list)
-        f.close()
+
+    #36氪
+    def main_ke(self):
+        try:
+            conn = self.db_conn()
+            cursor = conn.cursor()
+            # 获取本页面数据在数据库中的最新一条数据的时间，用于判断爬取下来的数据有没有存入数据库，做增量插入
+            newest_time = self.get_newest_time_by_pageid()
+
+            html = self.get_one_page(self.url)
+            res = self.parse_one_page(html, self.rule1)
+            id_for_ajax = res[0]
+            for i in [1, 2, 3]:
+                html_real = self.get_one_page("https://36kr.com/pp/api/newsflash?per_page=20&b_id="+str(id_for_ajax))
+                for item in self.parse_one_page(html_real, self.rule2):
+                    item = list(item)
+                    item[1] = item[1].encode('utf-8').decode("unicode_escape")
+                    item[2] = item[2].encode('utf-8').decode("unicode_escape")
+                    category_info = self.do_category(item, 1, 2)
+                    cursor.execute('select * from tblGrabNews where title=%s',
+                                   (item[1].strip().replace("&nbsp;", ""),))
+                    values = cursor.fetchall()
+                    public_time_d = datetime.datetime.strptime(item[3].strip(), '%Y-%m-%d %H:%M:%S')
+                    if public_time_d <= newest_time:
+                        return
+                    if len(values) == 0:
+                        if len(item[2].strip()) > 20:
+                            # 将数据存入数据库
+                            cursor.execute("INSERT INTO tblGrabNews VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                                                   (item[1].strip().replace("&nbsp;", ""), item[2].strip(), '0',
+                                                    item[3], '0', '0', '0', 0, 0, public_time_d, self.pageid,
+                                                    category_info[0], category_info[1]))
+                            conn.commit()
+                    id_for_ajax = item[0]
+            conn.close()
+        except Exception as e:
+            logging.exception(e)
+

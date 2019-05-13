@@ -2,6 +2,7 @@ import logging
 import pymssql
 import os,sys
 import time
+import datetime
 
 class Base(object):
     #定义构造函数，定义各种属性和logging类的配置
@@ -78,5 +79,8 @@ class Base(object):
         cursor.execute('select top 1 publicTime_d from tblGrabNews where pageId =' + str(
             self.pageid) + ' order by publicTime_d desc')
         values_new = cursor.fetchall()
-        return values_new[0][0]
+        if len(values_new) == 0:
+            return datetime.datetime.strptime("1980-01-01 00:00:00", '%Y-%m-%d %H:%M:%S')
+        else:
+            return values_new[0][0]
         

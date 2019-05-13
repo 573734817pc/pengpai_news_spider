@@ -4,9 +4,8 @@ from multiprocessing import Pool
 import os, time, random
 
 #澎湃新闻
-def pengpai(name):
+def pengpai():
     # #定义爬取的url
-    print('Run task %s...' % (os.getpid(),))
     url_pengpai = 'https://www.thepaper.cn/load_index.jsp?nodeids=25434,25436,25433,25438,25435,25437,27234,25485,25432,37978,&topCids=,3420378,3419837,3418451&pageidx='
     #定义爬取规则1
     rule1_pengpai = '<img.*?src="(.*?)".*?>.*?<h2>.*?href="(.*?)".*?>(.*?)</a>.*?</h2>.*?<p>(.*?)</p>.*?<div class="pdtt_trbs">.*?<a.*?>(.*?)</a>.*?<span>(.*?)</span>'
@@ -19,7 +18,7 @@ def pengpai(name):
     obj.main_pengpai()
 
 # 中国经济网
-def zgjj(name):
+def zgjj():
     # #定义爬取的url
     print('Run task %s...' % (os.getpid(),))
     url = 'http://finance.ce.cn/rolling/index.shtml'
@@ -34,7 +33,7 @@ def zgjj(name):
     obj.main_zgjj()
 
 #中国科技网
-def zgkj(name):
+def zgkj():
     #定义爬取的url
     print('Run task %s...' % (os.getpid(),))
     url = 'http://www.stdaily.com/cxzg80/kejizixun/kejizixun'
@@ -49,9 +48,8 @@ def zgkj(name):
     obj.main_zgkj()
 
 #人民网
-def rmw(name):
+def rmw():
     #定义爬取的url
-    print('Run task %s...' % (os.getpid(),))
     url = 'http://finance.people.com.cn/GB/70846/index.html'
     # 定义爬取规则1
     rule1 = "<li>.*?<a href='(.*?)'.*?>.*?</li>"
@@ -78,11 +76,30 @@ def xlcj():
     obj = Main.Main(url, rule1, rule2, pageid)
     obj.main_xlcj()
 
+#36氪
+def ke():
+    # 定义爬取的url
+    url = 'https://36kr.com/newsflashes'
+    # 定义爬取规则1
+    rule1 = '"\/newsflashes\/([\d]{6})"'
+    # 定义爬取规则2
+    rule2 = '{"id":([\d]{6}),.*?"title":"(.*?)".*?"description":"(.*?)".*?"published_at":"(.*?)"'
+    # 定义pageid
+    pageid = 6
+    # 调用Main类中的Main方法
+    obj = Main.Main(url, rule1, rule2, pageid)
+    obj.main_ke()
+
+
 def test(name):
     print('Run task %s (%s)...' % (name, os.getpid()))
 
 if __name__=='__main__':
+    rmw()
     xlcj()
+    pengpai()
+    ke()
+    zgjj()
     # # q启动一个进程，执行澎湃网页面爬取程序
     # p_pengpai = Process(target=pengpai, args=('pengpai',))
     # p_pengpai.start()
