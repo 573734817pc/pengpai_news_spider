@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../getCompanySpider/.idea/getCompanySpider.iml" filepath="$PROJECT_DIR$/../getCompanySpider/.idea/getCompanySpider.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pengpai_news_spider.iml" filepath="$PROJECT_DIR$/.idea/pengpai_news_spider.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,137 @@
+2019-05-10 09:25:44,414 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:39] - ERROR: [Errno 2] No such file or directory: '../companyName.txt'
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 18, in main
+    category_info = self.do_category(item)
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Base.py", line 50, in do_category
+    f = open("../companyName.txt", 'r')
+FileNotFoundError: [Errno 2] No such file or directory: '../companyName.txt'
+2019-05-10 09:26:39,600 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:39] - ERROR: [Errno 2] No such file or directory: '../companyName.txt'
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 18, in main
+    category_info = self.do_category(item)
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Base.py", line 50, in do_category
+    f = open("../companyName.txt", 'r')
+FileNotFoundError: [Errno 2] No such file or directory: '../companyName.txt'
+2019-05-10 11:00:09,787 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:88] - ERROR: 'tuple' object has no attribute 'replace'
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 51, in main_zgjj
+    url_son = item.replace("./", "http://finance.ce.cn/rolling/")
+AttributeError: 'tuple' object has no attribute 'replace'
+2019-05-10 11:14:08,774 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:88] - ERROR: unbalanced parenthesis at position 149
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 54, in main_zgjj
+    print(self.parse_one_page(html_son, self.rule2))
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\ParseOnePage.py", line 8, in parse_one_page
+    pattern = re.compile(get_rule, re.S)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\re.py", line 234, in compile
+    return _compile(pattern, flags)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\re.py", line 286, in _compile
+    p = sre_compile.compile(pattern, flags)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\sre_compile.py", line 764, in compile
+    p = sre_parse.parse(p, flags)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\sre_parse.py", line 944, in parse
+    raise source.error("unbalanced parenthesis")
+re.error: unbalanced parenthesis at position 149
+2019-05-10 13:21:42,602 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:108] - ERROR: time data '2019/05/10  11:32' does not match format '%Y-%m-%d %H:%M:%S'
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 59, in main_zgjj
+    public_time_d = datetime.datetime.strptime(item[1].strip(), '%Y-%m-%d %H:%M:%S')
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\_strptime.py", line 577, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\_strptime.py", line 359, in _strptime
+    (data_string, format))
+ValueError: time data '2019/05/10  11:32' does not match format '%Y-%m-%d %H:%M:%S'
+2019-05-10 13:25:34,647 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:108] - ERROR: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+Traceback (most recent call last):
+  File "src\pymssql.pyx", line 450, in pymssql.Cursor.execute
+  File "src\_mssql.pyx", line 1064, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1095, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1228, in _mssql.MSSQLConnection.format_and_run_query
+  File "src\_mssql.pyx", line 1639, in _mssql.check_cancel_and_raise
+  File "src\_mssql.pyx", line 1683, in _mssql.maybe_raise_MSSQLDatabaseException
+_mssql.MSSQLDatabaseException: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 63, in main_zgjj
+    (article_info[0].strip().replace("&nbsp;", ""), article_info[2].strip(), '0', item[1].strip(), article_info[2].strip(), '0', '0', 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
+  File "src\pymssql.pyx", line 468, in pymssql.Cursor.execute
+pymssql.OperationalError: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+2019-05-10 13:25:51,272 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:108] - ERROR: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+Traceback (most recent call last):
+  File "src\pymssql.pyx", line 450, in pymssql.Cursor.execute
+  File "src\_mssql.pyx", line 1064, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1095, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1228, in _mssql.MSSQLConnection.format_and_run_query
+  File "src\_mssql.pyx", line 1639, in _mssql.check_cancel_and_raise
+  File "src\_mssql.pyx", line 1683, in _mssql.maybe_raise_MSSQLDatabaseException
+_mssql.MSSQLDatabaseException: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 63, in main_zgjj
+    (article_info[0].strip().replace("&nbsp;", ""), article_info[2].strip(), '0', item[1].strip(), article_info[2].strip(), '0', '0', 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
+  File "src\pymssql.pyx", line 468, in pymssql.Cursor.execute
+pymssql.OperationalError: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+2019-05-10 13:32:12,746 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:85] - ERROR: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+Traceback (most recent call last):
+  File "src\pymssql.pyx", line 450, in pymssql.Cursor.execute
+  File "src\_mssql.pyx", line 1064, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1095, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1228, in _mssql.MSSQLConnection.format_and_run_query
+  File "src\_mssql.pyx", line 1639, in _mssql.check_cancel_and_raise
+  File "src\_mssql.pyx", line 1683, in _mssql.maybe_raise_MSSQLDatabaseException
+_mssql.MSSQLDatabaseException: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 63, in main_zgjj
+    (article_info[0].strip().replace("&nbsp;", ""), article_info[2].strip(), '0', item[1].strip(), article_info[2].strip(), '0', '0', 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
+  File "src\pymssql.pyx", line 468, in pymssql.Cursor.execute
+pymssql.OperationalError: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+2019-05-10 13:33:05,053 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:85] - ERROR: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+Traceback (most recent call last):
+  File "src\pymssql.pyx", line 450, in pymssql.Cursor.execute
+  File "src\_mssql.pyx", line 1064, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1095, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1228, in _mssql.MSSQLConnection.format_and_run_query
+  File "src\_mssql.pyx", line 1639, in _mssql.check_cancel_and_raise
+  File "src\_mssql.pyx", line 1683, in _mssql.maybe_raise_MSSQLDatabaseException
+_mssql.MSSQLDatabaseException: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 63, in main_zgjj
+    (article_info[0].strip().replace("&nbsp;", ""), article_info[2].strip(), '0', item[1].strip(), article_info[2].strip(), '0', '0', 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
+  File "src\pymssql.pyx", line 468, in pymssql.Cursor.execute
+pymssql.OperationalError: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+2019-05-10 13:41:00,745 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:85] - ERROR: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+Traceback (most recent call last):
+  File "src\pymssql.pyx", line 450, in pymssql.Cursor.execute
+  File "src\_mssql.pyx", line 1064, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1095, in _mssql.MSSQLConnection.execute_query
+  File "src\_mssql.pyx", line 1228, in _mssql.MSSQLConnection.format_and_run_query
+  File "src\_mssql.pyx", line 1639, in _mssql.check_cancel_and_raise
+  File "src\_mssql.pyx", line 1683, in _mssql.maybe_raise_MSSQLDatabaseException
+_mssql.MSSQLDatabaseException: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 62, in main_zgjj
+    ("123", article_info[2].strip(), '0', item[1].strip(), article_info[2].strip(), '0', '0', 0, 0, public_time_d, self.pageid, category_info[0], category_info[1]))
+  File "src\pymssql.pyx", line 468, in pymssql.Cursor.execute
+pymssql.OperationalError: (8152, b'String or binary data would be truncated.DB-Lib error message 20018, severity 16:\nGeneral SQL Server error: Check messages from the SQL Server\n')
+2019-05-10 16:52:23,105 - C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py[line:148] - ERROR: time data '1:00' does not match format '%Y-%m-%d %H:%M:%S'
+Traceback (most recent call last):
+  File "C:\Users\0923\Desktop\python鰾單\pengpai_news_git\pengpai_news_spider\spiderLib\Main.py", line 133, in main_rmw
+    public_time_d = datetime.datetime.strptime(item[2].strip() + ":00", '%Y-%m-%d %H:%M:%S')
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\_strptime.py", line 577, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+  File "C:\Users\0923\AppData\Local\Programs\Python\Python37\lib\_strptime.py", line 359, in _strptime
+    (data_string, format))
+ValueError: time data '1:00' does not match format '%Y-%m-%d %H:%M:%S'
